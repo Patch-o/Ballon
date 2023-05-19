@@ -10,7 +10,7 @@ function App() {
     <div className="app">
       <Canvas camera={{position:[100,-100,-80], fov:30}}>
         <Sky />
-        <Balloon position={[0,2.5, -4]} rotation={[0,Math.PI/2, 0]} />
+        {/* <Balloon position={[0,2.5, -4]} rotation={[0,Math.PI/2, 0]} /> */}
         <RandomizedLight
         />
         <pointLight position={[5,3,-5]} color={'hsl(126, 26%, 62%)'} />
