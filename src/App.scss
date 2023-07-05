@@ -1,7 +1,18 @@
 .app {
+  position: relative;
   text-align: center;
-  height: 100vh;
+  height: 100svh;
   width: 100%;
   background-color: rgb(219, 219, 219);
 }
-
+.canvas{
+  height: 100svh;
+}
+.butt{
+  background-color: rgba(0, 128, 0, 0.273);
+  backdrop-filter: blur(3px);
+  border: 0;
+  border-radius: 15px;
+  padding: 1rem;
+  z-index: 2;
+}

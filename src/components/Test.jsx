@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { useGLTF, useTexture } from '@react-three/drei';
+import React, { useState, useRef, useCallback } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
+import { Html, useGLTF, useTexture } from '@react-three/drei';
+import { SphereGeometry } from 'three';
 
 const chili = 'https://res.cloudinary.com/dt4up0c48/image/upload/v1686161034/Green5_wtkz9b.glb';
 const carolina = 'https://res.cloudinary.com/dt4up0c48/image/upload/v1686161006/BlackShirt1_iaknmm.glb';
@@ -27,31 +28,48 @@ const Test = () => {
   };
 
   useFrame((state) => {
-    const elapsedTime = state.clock.elapsedTime % 10;
-
-  let scale;
-
-  if (elapsedTime <= 1) {
-    // Escala creciente de 0 a 1 durante 1 segundo
-    scale = elapsedTime  ;
-  } else if (elapsedTime <= 4) {
-    // Escala constante en 1 durante 3 segundos
-    scale = 1;
-  } else if (elapsedTime <= 5) {
-    // Escala decreciente de 1 a 0 durante 1 segundo
-    scale = 5 - elapsedTime;
-  } else {
-    scale = 0;
-  }
-
-  meshRef.current.scale.set(scale, scale, scale);
+   
   });
 
   return (
+    <>
     <mesh onClick={handleClick} ref={meshRef}>
       <ModelViewer url={currentModel} />
+    <ScreenshotButton />
     </mesh>
+    </>
+
   );
 };
 
 export default Test;
+
+function ScreenshotButton() {
+  const { gl, scene, camera } = useThree();
+
+  const handleScreenshot = useCallback(() => {
+    gl.setRenderTarget(null);
+    gl.render(scene, camera);
+
+    const screenshotDataUrl = gl.domElement.toDataURL();
+
+    const link = document.createElement("a");
+    link.href = screenshotDataUrl;
+    link.download = "screenshot.png";
+    link.click();
+  }, [gl, scene, camera]);
+
+  return (
+    <Html
+      // position={[0.3, -0.2, 0]}
+      // occlude='blending'
+      scale={0.1}
+      transform
+      geometry={<SphereGeometry args={[0.66, 1.47, 0.24]} ><meshNormalMaterial/></SphereGeometry>}
+    >
+      <button className="butt" onClick={handleScreenshot}>
+        Descargar screenshot
+      </button>
+    </Html>
+  );
+}
