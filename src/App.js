@@ -60,7 +60,7 @@ function App() {
           </EffectComposer>
           <Environment files={"./littleParis.hdr"} />
           <Scene />
-          <Perf />
+          {/* <Perf /> */}
           <Nodes nodeData={data} />
         </Suspense>
       </Canvas>
